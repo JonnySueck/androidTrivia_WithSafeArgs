@@ -65,6 +65,11 @@ class GameWonFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.winner_menu, menu)
+    // check if the activity resolves
+        if (null == getShareIntent().resolveActivity(requireActivity().packageManager)) {
+            // hide the menu item if it doesn't resolve
+            menu.findItem(R.id.share)?.isVisible = false
+        }
     }
 //    creating our Share Intent to share winning a game
     private fun getShareIntent() : Intent {
