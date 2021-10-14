@@ -51,8 +51,7 @@ class GameWonFragment : Fragment() {
             view.findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
         }
         setHasOptionsMenu(true)
-        // TODO (08) Add and show toast to get the GameWonFragmentArgs from the arguments Bundle
-        // "NumCorrect: ${args.numCorrect}, NumQuestions: ${args.numQuestions}"
+        // Require arguments to win the game, and make a toast to show them
         val args = GameWonFragmentArgs.fromBundle(requireArguments())
         Toast.makeText(
             context,
