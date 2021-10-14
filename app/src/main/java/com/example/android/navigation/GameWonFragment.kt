@@ -46,10 +46,11 @@ class GameWonFragment : Fragment() {
             // Navigate from the game fragment to the game won fragment
             view.findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
         }
-        // Declaring that our Fragment has a Menu
+        // anyon fn to handle GameWonFragmentDirections
         binding.nextMatchButton.setOnClickListener { view: View ->
             view.findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
         }
+        // Declaring that our Fragment has a Menu
         setHasOptionsMenu(true)
         // Require arguments to win the game, and make a toast to show them
         val args = GameWonFragmentArgs.fromBundle(requireArguments())
@@ -59,5 +60,29 @@ class GameWonFragment : Fragment() {
             Toast.LENGTH_LONG
         ).show()
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.winner_menu, menu)
+    }
+//    creating our Share Intent to share winning a game
+    private fun getShareIntent() : Intent {
+        val args = GameWonFragmentArgs.fromBundle(requireArguments())
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.setType("text/plain")
+            .putExtra(Intent.EXTRA_TEXT,
+                getString(R.string.share_success_text, args.numCorrect, args.numQuestions))
+    return shareIntent
+    }
+    private fun shareSuccess() {
+        startActivity(getShareIntent())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item!!.itemId){
+            R.id.share -> shareSuccess()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
